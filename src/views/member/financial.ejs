@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta content="telephone=no" name="format-detection">
+    <meta name="description" content="a shop from vietnam.">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <title>Financial</title>
+    <link href="/css/vantjs.css" rel="stylesheet">
+    <link href="/css/vendor.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/css/pages__finance.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
+    <link rel="stylesheet" type="text/css" href="/css/pages__parity.css">
+    <link rel="stylesheet" type="text/css" href="/css/pages__member.css">
+    <style>
+        .display-none {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body class="">
+    <div data-v-58c67bb8="" class="layout-content">
+        <!---->
+        <div data-v-7844dbae="" class="security-content">
+            <div data-v-7844dbae="" class="van-nav-bar van-nav-bar--fixed">
+                <a href="/member/index">
+                    <div class="van-nav-bar__left"><i class="van-icon van-icon-arrow-left van-nav-bar__arrow"><!----></i></div>
+                </a>
+                <div class="van-nav-bar__title van-ellipsis">Chi tiết tài chính</div>
+                <div class="van-nav-bar__right"></div>
+            </div>
+            <div data-v-7844dbae="" class="bar-box"></div>
+            <div data-v-7844dbae="" class="container">
+                <div data-v-7844dbae="">thời gian tạo ra</div>
+                <div data-v-7844dbae="">các loại tài chính</div>
+                <div data-v-7844dbae=""></div>
+                <div data-v-7844dbae="">số tiền</div>
+            </div>
+            <div data-v-7844dbae="">
+                <div data-v-7844dbae="" role="feed" class="van-list" style="padding: 0px;">
+                </div>
+                <div class="van-list__finished-text"></div>
+                <div class="van-list__placeholder"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function formatMoney(money) {
+            return String(money).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        }
+        $(document).ready(function() {
+            var limit = 40;
+            var start = 0;
+            var action = 'inactive';
+
+            function load_country_data(limit, start) {
+                $.ajax({
+                    url: "/financial/index",
+                    method: "POST",
+                    data: {
+                        limit: limit,
+                        start: start
+                    },
+                    cache: false,
+                    success: function(data) {
+                        const datas = JSON.parse(data);
+                        const listLoai = datas.loai.split(',');
+                        const money = datas.money.split(',');
+                        const time = datas.time.split(',');
+                        for (let i = 0; i < listLoai.length; i++) {
+                            const money2 = formatMoney(money[i]);
+                            if (listLoai[i] == '0') {
+                                $('.van-list').append(
+                                    `<div data-v-7844dbae="" class="main">` +
+                                    `<div data-v-7844dbae="" style="width: 130px;">` +
+                                    `<div data-v-7844dbae="">${time[i]}</div>` +
+                                    `</div>` +
+                                    `<div data-v-7844dbae="" style="flex: 1 1 0%;">
+                                        <b data-v-7844dbae="">
+                                            <span data-v-7844dbae="">thu nhập</span>
+                                        </b>` +
+                                    `<div data-v-7844dbae="">Red-Envelope Received</div>` +
+                                    `</div>` +
+                                    `<div data-v-7844dbae="" style="width: 100px;"><span data-v-7844dbae="">${money2}</span></div>` +
+                                    `</div>`
+                                );
+                            }
+                            if (listLoai[i] == "1") {
+                                $('.van-list').append(
+                                    `<div data-v-7844dbae="" class="main">` +
+                                    `<div data-v-7844dbae="" style="width: 130px;">` +
+                                    `<div data-v-7844dbae="">${time[i]}</div>` +
+                                    `</div>` +
+                                    `<div data-v-7844dbae="" style="flex: 1 1 0%;">
+                                        <b data-v-7844dbae="">
+                                            <span data-v-7844dbae="">tiêu dùng</span>
+                                        </b>` +
+                                    `<div data-v-7844dbae="">ParityPlusCOrder_Amount</div>` +
+                                    `</div>` +
+                                    `<div data-v-7844dbae="" style="width: 100px;"><span data-v-7844dbae="">-${money2}</span></div>` +
+                                    `</div>`
+                                );
+                            }
+                            if (listLoai[i] == "2") {
+                                $('.van-list').append(
+                                    `<div data-v-7844dbae="" class="main">` +
+                                    `<div data-v-7844dbae="" style="width: 130px;">` +
+                                    `<div data-v-7844dbae="">${time[i]}</div>` +
+                                    `</div>` +
+                                    `<div data-v-7844dbae="" style="flex: 1 1 0%;">
+                                        <b data-v-7844dbae="">
+                                            <span data-v-7844dbae="">thu nhập</span>
+                                        </b>` +
+                                    `<div data-v-7844dbae="">ParityPlusCOrder_Amount</div>` +
+                                    `</div>` +
+                                    `<div data-v-7844dbae="" style="width: 100px;"><span data-v-7844dbae="">${money2}</span></div>` +
+                                    `</div>`
+                                );
+                            }
+                            if (listLoai[i] == "3") {
+                                $('.van-list').append(
+                                    `<div data-v-7844dbae="" class="main">` +
+                                    `<div data-v-7844dbae="" style="width: 130px;">` +
+                                    `<div data-v-7844dbae="">${time[i]}</div>` +
+                                    `</div>` +
+                                    `<div data-v-7844dbae="" style="flex: 1 1 0%;">
+                                        <b data-v-7844dbae="">
+                                            <span data-v-7844dbae="">thu nhập</span>
+                                        </b>` +
+                                    `<div data-v-7844dbae="">BonusApply Success</div>` +
+                                    `</div>` +
+                                    `<div data-v-7844dbae="" style="width: 100px;"><span data-v-7844dbae="">${money2}</span></div>` +
+                                    `</div>`
+                                );
+                            }
+                            if (listLoai[i] == "5") {
+                                $('.van-list').append(
+                                    `<div data-v-7844dbae="" class="main">` +
+                                    `<div data-v-7844dbae="" style="width: 130px;">` +
+                                    `<div data-v-7844dbae="">${time[i]}</div>` +
+                                    `</div>` +
+                                    `<div data-v-7844dbae="" style="flex: 1 1 0%;">
+                                        <b data-v-7844dbae="">
+                                            <span data-v-7844dbae="">Withdraws</span>
+                                        </b>` +
+                                    `<div data-v-7844dbae="">Withdrawal </div>` +
+                                    `</div>` +
+                                    `<div data-v-7844dbae="" style="width: 100px;"><span data-v-7844dbae="">${money2}</span></div>` +
+                                    `</div>`
+                                );
+                            }
+                        }
+                        if (datas.money == "") {
+                            action = 'active';
+                            $('.van-list__finished-text').text("Không còn dữ liệu");
+                        } else {
+                            action = "inactive";
+                            $('.van-list__finished-text').html('<div class="van-list__loading"><div class="van-loading van-loading--circular"><span class="van-loading__spinner van-loading__spinner--circular" style="width: 16px; height: 16px;"><svg viewBox="25 25 50 50" class="van-loading__circular"><circle cx="50" cy="50" r="20" fill="none"></circle></svg></span><span class="van-loading__text">Đang tải</span></div></div>');
+                        }
+                    }
+                });
+            }
+
+            if (action == 'inactive') {
+                action = 'active';
+                load_country_data(limit, start);
+            }
+            $(window).scroll(function() {
+                if ($(window).scrollTop() + $(window).height() > $(".van-list").height() && action == 'inactive') {
+                    action = 'active';
+                    start = start + limit;
+                    setTimeout(function() {
+                        load_country_data(limit, start);
+                    }, 1000);
+                }
+            });
+
+        });
+    </script>
+</body>
+
+</html>
