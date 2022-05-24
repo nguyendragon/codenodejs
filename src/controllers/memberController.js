@@ -427,13 +427,20 @@ const securityNikname = async(req, res) => {
     return res.render('member/security/nikname.ejs', { user });
 }
 
+function xoakytu(text1) {
+    const text = String(text1);
+    let text2 = text.replace(/[&\/\\#^+()$~%.'":*?<>{}!@]/g, '')
+    return text2;
+}
+
 const editNikname = async(req, res) => {
     var tokenUser = req.cookies.token;
     var token = jwt.verify(tokenUser, process.env.JWT_ACCESS_TOKEN);
     var phone_login = token.user.phone_login;
     var get_input = req.body.get_input;
+    const name = xoakytu(get_input);
     if (get_input.length <= 25) {
-        await connection.execute('UPDATE `users` SET `name_user` = ? WHERE `phone_login` = ?', [get_input, phone_login]);
+        await connection.execute('UPDATE `users` SET `name_user` = ? WHERE `phone_login` = ?', [name, phone_login]);
         res.end('{"message": 1}');
     } else {
         res.end('{"message": "error"}');
@@ -706,7 +713,7 @@ const couleepayTXN = async(req, res) => {
     var phone_login = token.user.phone_login;
     var valueMoney = req.body.valueMoney;
     let ma_don = Math.floor(Math.random() * (9999999 - 1000000)) + 1000000;
-    if (valueMoney >= 100000 && valueMoney <= 80000000) {
+    if (valueMoney >= 10000 && valueMoney <= 8000000) {
         const [results] = await connection.execute('SELECT * FROM `recharge` WHERE `phone_login` = ? AND `status` = 0', [phone_login]);
         if (results.length > 0) {
             res.end('{"message": 0}');

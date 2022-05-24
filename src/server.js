@@ -25,7 +25,8 @@ app.use(express.json());
 configViewEngine(app);
 
 // cron 3p 1 lần theo giờ VN 1 ngày 480 lần
-cronJonController.automomo(cron);
+
+// cronJonController.automomo(cron);
 cronJonController.parityCron(cron, io);
 
 // init route

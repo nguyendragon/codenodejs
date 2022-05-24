@@ -70,15 +70,15 @@
                         </div>
                     </div>
                     <div data-v-0ae5fef1="" class="top-chunk">
+                        <div data-v-0ae5fef1="" class="top-chunk-sub unselected">₫10000</div>
+                        <div data-v-0ae5fef1="" class="top-chunk-sub unselected">₫30000</div>
+                        <div data-v-0ae5fef1="" class="top-chunk-sub unselected">₫50000</div>
                         <div data-v-0ae5fef1="" class="top-chunk-sub unselected">₫100000</div>
                         <div data-v-0ae5fef1="" class="top-chunk-sub unselected">₫300000</div>
                         <div data-v-0ae5fef1="" class="top-chunk-sub unselected">₫500000</div>
                         <div data-v-0ae5fef1="" class="top-chunk-sub unselected">₫1000000</div>
-                        <div data-v-0ae5fef1="" class="top-chunk-sub unselected">₫3000000</div>
                         <div data-v-0ae5fef1="" class="top-chunk-sub unselected">₫5000000</div>
-                        <div data-v-0ae5fef1="" class="top-chunk-sub unselected">₫10000000</div>
-                        <div data-v-0ae5fef1="" class="top-chunk-sub unselected">₫50000000</div>
-                        <div data-v-0ae5fef1="" class="top-chunk-sub unselected">₫80000000</div>
+                        <div data-v-0ae5fef1="" class="top-chunk-sub unselected">₫8000000</div>
                     </div>
                 </div>
                 <div data-v-0ae5fef1="" class="cashfree">
@@ -125,47 +125,47 @@
         $(document).ready(function() {
             $(".input_value").keyup(function() {
                 var get_value = $('.input_value').val().trim();
-                if (get_value == 100000) {
+                if (get_value == 10000) {
                     $('.top-chunk-sub:eq(0)').removeClass('unselected');
                     $('.top-chunk-sub').removeClass('selected');
                     $('.top-chunk-sub:eq(0)').addClass('selected');
                     $('.top-chunk-sub').addClass('unselected');
-                } else if (get_value == 300000) {
+                } else if (get_value == 30000) {
                     $('.top-chunk-sub:eq(1)').removeClass('unselected');
                     $('.top-chunk-sub').removeClass('selected');
                     $('.top-chunk-sub').addClass('unselected');
                     $('.top-chunk-sub:eq(1)').addClass('selected');
-                } else if (get_value == 500000) {
+                } else if (get_value == 50000) {
                     $('.top-chunk-sub:eq(2)').removeClass('unselected');
                     $('.top-chunk-sub').removeClass('selected');
                     $('.top-chunk-sub').addClass('unselected');
                     $('.top-chunk-sub:eq(2)').addClass('selected');
-                } else if (get_value == 1000000) {
+                } else if (get_value == 100000) {
                     $('.top-chunk-sub:eq(3)').removeClass('unselected');
                     $('.top-chunk-sub').removeClass('selected');
                     $('.top-chunk-sub').addClass('unselected');
                     $('.top-chunk-sub:eq(3)').addClass('selected');
-                } else if (get_value == 3000000) {
+                } else if (get_value == 300000) {
                     $('.top-chunk-sub:eq(4)').removeClass('unselected');
                     $('.top-chunk-sub').removeClass('selected');
                     $('.top-chunk-sub').addClass('unselected');
                     $('.top-chunk-sub:eq(4)').addClass('selected');
-                } else if (get_value == 5000000) {
+                } else if (get_value == 500000) {
                     $('.top-chunk-sub:eq(5)').removeClass('unselected');
                     $('.top-chunk-sub').removeClass('selected');
                     $('.top-chunk-sub').addClass('unselected');
                     $('.top-chunk-sub:eq(5)').addClass('selected');
-                } else if (get_value == 10000000) {
+                } else if (get_value == 1000000) {
                     $('.top-chunk-sub:eq(6)').removeClass('unselected');
                     $('.top-chunk-sub').removeClass('selected');
                     $('.top-chunk-sub').addClass('unselected');
                     $('.top-chunk-sub:eq(6)').addClass('selected');
-                } else if (get_value == 50000000) {
+                } else if (get_value == 5000000) {
                     $('.top-chunk-sub:eq(7)').removeClass('unselected');
                     $('.top-chunk-sub').removeClass('selected');
                     $('.top-chunk-sub').addClass('unselected');
                     $('.top-chunk-sub:eq(7)').addClass('selected');
-                } else if (get_value == 80000000) {
+                } else if (get_value == 8000000) {
                     $('.top-chunk-sub:eq(8)').removeClass('unselected');
                     $('.top-chunk-sub').removeClass('selected');
                     $('.top-chunk-sub').addClass('unselected');
@@ -190,43 +190,43 @@
             });
             $('.top-chunk-sub:eq(0)').click(function(e) {
                 e.preventDefault();
-                $('.van-field__control').val(100000)
+                $('.van-field__control').val(10000)
             });
             $('.top-chunk-sub:eq(1)').click(function(e) {
                 e.preventDefault();
-                $('.van-field__control').val(300000)
+                $('.van-field__control').val(30000)
             });
             $('.top-chunk-sub:eq(2)').click(function(e) {
                 e.preventDefault();
-                $('.van-field__control').val(500000)
+                $('.van-field__control').val(50000)
             });
             $('.top-chunk-sub:eq(3)').click(function(e) {
                 e.preventDefault();
-                $('.van-field__control').val(1000000)
+                $('.van-field__control').val(100000)
             });
             $('.top-chunk-sub:eq(4)').click(function(e) {
                 e.preventDefault();
-                $('.van-field__control').val(3000000)
+                $('.van-field__control').val(300000)
             });
             $('.top-chunk-sub:eq(5)').click(function(e) {
                 e.preventDefault();
-                $('.van-field__control').val(5000000)
+                $('.van-field__control').val(500000)
             });
             $('.top-chunk-sub:eq(6)').click(function(e) {
                 e.preventDefault();
-                $('.van-field__control').val(10000000)
+                $('.van-field__control').val(1000000)
             });
             $('.top-chunk-sub:eq(7)').click(function(e) {
                 e.preventDefault();
-                $('.van-field__control').val(50000000)
+                $('.van-field__control').val(5000000)
             });
             $('.top-chunk-sub:eq(8)').click(function(e) {
                 e.preventDefault();
-                $('.van-field__control').val(80000000)
+                $('.van-field__control').val(8000000)
             });
             $('button:eq(0)').click(function(e) {
                 var valueMoney = $('.van-field__control').val().trim();
-                if (valueMoney != "" && valueMoney > 99999 && valueMoney <= 80000000) {
+                if (valueMoney != "" && valueMoney > 9999 && valueMoney <= 8000000) {
                     $.ajax({
                         type: "POST",
                         url: "/couleepay/recharge",
@@ -254,15 +254,15 @@
                         $('.van-toast--text').addClass('display-none');
                         $("button:eq(0)").removeAttr("disabled");
                     }, 1500);
-                } else if (valueMoney < 100000) {
+                } else if (valueMoney < 10000) {
                     $('.van-toast--text').removeClass('display-none');
-                    $('.van-toast--text .van-toast__text').text('Số tiền nạp vào không được nhỏ hơn100000Rs');
+                    $('.van-toast--text .van-toast__text').text('Số tiền nạp vào không được nhỏ hơn10000Rs');
                     $("button:eq(0)").attr("disabled", "");
                     setTimeout(() => {
                         $('.van-toast--text').addClass('display-none');
                         $("button:eq(0)").removeAttr("disabled");
                     }, 1500);
-                } else if (valueMoney > 80000000) {
+                } else if (valueMoney > 8000000) {
                     $('.edwefwe').fadeIn();
                     setTimeout(() => {
                         $('.edwefwe').fadeOut();
