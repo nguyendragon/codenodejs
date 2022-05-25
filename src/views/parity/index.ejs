@@ -28,29 +28,10 @@
     <link rel="stylesheet" type="text/css" href="/css/pages__promotion.css">
     <link rel="stylesheet" href="/css/style.css">
     <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
-    <style>
-        .preloaders {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 2019;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, .7);
-        }
-        
-        .van-toast__icon {
-            height: 40px;
-        }
-    </style>
 </head>
 
 <body class="body">
-    <div style="position: fixed;right: 0;top:40%;z-index: 10;" class="gift-tele">
-        <a href="https://t.me/nhancodeq36club" target="_blank" rel="noopener noreferrer">
-            <img src="/upload/gift.gif" style="width: 65px;height: 65px;" alt="">
-        </a>
-    </div>
+    <div id="gift-tele"></div>
     <div class="preloaders" style="display: none;"></div>
     <div id="preloader"></div>
     <div class="layout-content">
@@ -264,6 +245,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="/js/chuck.core.js"></script>
     <script src="/js/chuck.parity.js"></script>
+    <script>
+        const featured = document.getElementById("gift-tele");
+        featured.addEventListener('click', () => {
+            location.href = "https://t.me/nhancodeq36club";
+        })
+        let width = featured.offsetWidth;
+        let height = featured.offsetHeight;
+
+        featured.addEventListener("pointermove", (e) => {
+            if (e.pressure > 0) {
+                const x = e.pageX;
+                const y = e.pageY;
+
+                featured.style.top = y - height / 2 + "px";
+                featured.style.left = x - width / 2 + "px";
+
+                // you can also use transition instead position but u cant use flex in a parent element
+                // featured.style.transform = "translate(" + (x - (width / 2)) + "px," + (y - (height / 2)) + "px)";
+            }
+        });
+    </script>
 </body>
 
 </html>

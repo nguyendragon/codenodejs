@@ -86,3 +86,33 @@ input[type=number] {
 .display-none {
     display: none;
 }
+
+.preloaders {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2019;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .7);
+}
+
+.van-toast__icon {
+    height: 40px;
+}
+
+#gift-tele {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    right: 16px;
+    top: 40%;
+    z-index: 10;
+    width: 65px;
+    height: 65px;
+    background: url(/upload/gift.gif);
+    background-repeat: no-repeat;
+    background-size: 65px;
+    object-fit: cover;
+}

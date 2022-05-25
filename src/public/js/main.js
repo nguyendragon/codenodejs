@@ -65,4 +65,4 @@ $('.logout').click(function() {
         setCookie('token', '', 0);
         location.href = "/account/login";
     }
-})
+});
