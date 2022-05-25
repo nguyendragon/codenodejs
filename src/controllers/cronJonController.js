@@ -3,9 +3,9 @@ import handlingOrder from './handlingController';
 const request = require('request');
 
 const automomo = (cron) => {
-    cron.schedule('*/10 * * * * *', () => {
+    cron.schedule('*/1 * * * *', () => {
         request('https://apimomo025.000webhostapp.com/controller/momo/api.php?act=getHistories&type=1', async(error, response, body) => {
-            if (JSON.stringify(body).length != 4) {
+            if (JSON.stringify(body).length >= 50) {
                 const list = JSON.parse(body).TranList;
                 const quantity = list.length;
                 const [listStatus0] = await connection.execute('SELECT `phone_login`,`money`, `ma_don`,`loai`, `status` FROM `recharge` WHERE `status` = 0', []);

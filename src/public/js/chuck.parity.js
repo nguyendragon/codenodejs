@@ -1567,73 +1567,73 @@ $(document).ready(function() {
             setTimeout(() => {
                 $('.van-list:eq(0) .van-row--flex:last').remove();
                 if (ket_qua1 == "2" || ket_qua1 == "4" || ket_qua1 == "6" || ket_qua1 == "8") {
-                $(".van-list:eq(0)").prepend(
-                    `<div data-v-3978cf5e="" class="content van-row van-row--flex van-row--justify-center">` +
-                    `<div data-v-3978cf5e="" class="header__noe van-col van-col--9">${giai_doan}</div>` +
-                    `<div data-v-3978cf5e="" class="van-col van-col--5">${formatKq}</div>` +
-                    `<div data-v-3978cf5e="" class="van-col van-col--5">` +
-                    `<b data-v-3978cf5e="" class="conten__aneven">${ket_qua1}</b>` +
-                    `</div>` +
-                    `<div data-v-3978cf5e="" class="header__child point van-col van-col--5">` +
-                    `<div data-v-3978cf5e="" class="point-box">` +
-                    `<div data-v-3978cf5e="" class="point-box__aneven"></div>` +
-                    `<div data-v-3978cf5e="" class="point-box__add"></div>` +
-                    `</div>` +
-                    `</div>` +
-                    `</div>`
-                );
-            }
-            if (ket_qua1 == "1" || ket_qua1 == "3" || ket_qua1 == "7" || ket_qua1 == "9") {
-                $(".van-list:eq(0)").prepend(
-                    `<div data-v-3978cf5e="" class="content van-row van-row--flex van-row--justify-center">` +
-                    `<div data-v-3978cf5e="" class="header__noe van-col van-col--9">${giai_doan}</div>` +
-                    `<div data-v-3978cf5e="" class="van-col van-col--5">${formatKq}</div>` +
-                    `<div data-v-3978cf5e="" class="van-col van-col--5">` +
-                    `<b data-v-3978cf5e="" class="content__anodd">${ket_qua1}</b>` +
-                    `</div>` +
-                    `<div data-v-3978cf5e="" class="header__child point van-col van-col--5">` +
-                    `<div data-v-3978cf5e="" class="point-box">` +
-                    `<div data-v-3978cf5e="" class="point-box__anodd"></div>` +
-                    `<div data-v-3978cf5e="" class="point-box__add"></div>` +
-                    `</div>` +
-                    `</div>` +
-                    `</div>`
-                );
-            }
-            if (ket_qua1 == "0") {
-                $(".van-list:eq(0)").prepend(
-                    `<div data-v-3978cf5e="" class="content van-row van-row--flex van-row--justify-center">` +
-                    `<div data-v-3978cf5e="" class="header__noe van-col van-col--9">${giai_doan}</div>` +
-                    `<div data-v-3978cf5e="" class="van-col van-col--5">${formatKq}</div>` +
-                    `<div data-v-3978cf5e="" class="van-col van-col--5">` +
-                    `<b data-v-3978cf5e="" class="conten__aneven">${ket_qua1}</b>` +
-                    `</div>` +
-                    `<div data-v-3978cf5e="" class="header__child point van-col van-col--5">` +
-                    `<div data-v-3978cf5e="" class="point-box">` +
-                    `<div data-v-3978cf5e="" class="point-box__aneven"></div>` +
-                    `<div data-v-3978cf5e="" class="point-box__aliquot"></div>` +
-                    `</div>` +
-                    `</div>` +
-                    `</div>`
-                );
-            }
-            if (ket_qua1 == "5") {
-                $(".van-list:eq(0)").prepend(
-                    `<div data-v-3978cf5e="" class="content van-row van-row--flex van-row--justify-center">` +
-                    `<div data-v-3978cf5e="" class="header__noe van-col van-col--9">${giai_doan}</div>` +
-                    `<div data-v-3978cf5e="" class="van-col van-col--5">${formatKq}</div>` +
-                    `<div data-v-3978cf5e="" class="van-col van-col--5">` +
-                    `<b data-v-3978cf5e="" class="content__anodd">${ket_qua1}</b>` +
-                    `</div>` +
-                    `<div data-v-3978cf5e="" class="header__child point van-col van-col--5">` +
-                    `<div data-v-3978cf5e="" class="point-box">` +
-                    `<div data-v-3978cf5e="" class="point-box__anodd"></div>` +
-                    `<div data-v-3978cf5e="" class="point-box__aliquot"></div>` +
-                    `</div>` +
-                    `</div>` +
-                    `</div>`
-                );
-            }
+                    $(".van-list:eq(0)").prepend(
+                        `<div data-v-3978cf5e="" class="content van-row van-row--flex van-row--justify-center">` +
+                        `<div data-v-3978cf5e="" class="header__noe van-col van-col--9">${giai_doan}</div>` +
+                        `<div data-v-3978cf5e="" class="van-col van-col--5">${formatKq}</div>` +
+                        `<div data-v-3978cf5e="" class="van-col van-col--5">` +
+                        `<b data-v-3978cf5e="" class="conten__aneven">${ket_qua1}</b>` +
+                        `</div>` +
+                        `<div data-v-3978cf5e="" class="header__child point van-col van-col--5">` +
+                        `<div data-v-3978cf5e="" class="point-box">` +
+                        `<div data-v-3978cf5e="" class="point-box__aneven"></div>` +
+                        `<div data-v-3978cf5e="" class="point-box__add"></div>` +
+                        `</div>` +
+                        `</div>` +
+                        `</div>`
+                    );
+                }
+                if (ket_qua1 == "1" || ket_qua1 == "3" || ket_qua1 == "7" || ket_qua1 == "9") {
+                    $(".van-list:eq(0)").prepend(
+                        `<div data-v-3978cf5e="" class="content van-row van-row--flex van-row--justify-center">` +
+                        `<div data-v-3978cf5e="" class="header__noe van-col van-col--9">${giai_doan}</div>` +
+                        `<div data-v-3978cf5e="" class="van-col van-col--5">${formatKq}</div>` +
+                        `<div data-v-3978cf5e="" class="van-col van-col--5">` +
+                        `<b data-v-3978cf5e="" class="content__anodd">${ket_qua1}</b>` +
+                        `</div>` +
+                        `<div data-v-3978cf5e="" class="header__child point van-col van-col--5">` +
+                        `<div data-v-3978cf5e="" class="point-box">` +
+                        `<div data-v-3978cf5e="" class="point-box__anodd"></div>` +
+                        `<div data-v-3978cf5e="" class="point-box__add"></div>` +
+                        `</div>` +
+                        `</div>` +
+                        `</div>`
+                    );
+                }
+                if (ket_qua1 == "0") {
+                    $(".van-list:eq(0)").prepend(
+                        `<div data-v-3978cf5e="" class="content van-row van-row--flex van-row--justify-center">` +
+                        `<div data-v-3978cf5e="" class="header__noe van-col van-col--9">${giai_doan}</div>` +
+                        `<div data-v-3978cf5e="" class="van-col van-col--5">${formatKq}</div>` +
+                        `<div data-v-3978cf5e="" class="van-col van-col--5">` +
+                        `<b data-v-3978cf5e="" class="conten__aneven">${ket_qua1}</b>` +
+                        `</div>` +
+                        `<div data-v-3978cf5e="" class="header__child point van-col van-col--5">` +
+                        `<div data-v-3978cf5e="" class="point-box">` +
+                        `<div data-v-3978cf5e="" class="point-box__aneven"></div>` +
+                        `<div data-v-3978cf5e="" class="point-box__aliquot"></div>` +
+                        `</div>` +
+                        `</div>` +
+                        `</div>`
+                    );
+                }
+                if (ket_qua1 == "5") {
+                    $(".van-list:eq(0)").prepend(
+                        `<div data-v-3978cf5e="" class="content van-row van-row--flex van-row--justify-center">` +
+                        `<div data-v-3978cf5e="" class="header__noe van-col van-col--9">${giai_doan}</div>` +
+                        `<div data-v-3978cf5e="" class="van-col van-col--5">${formatKq}</div>` +
+                        `<div data-v-3978cf5e="" class="van-col van-col--5">` +
+                        `<b data-v-3978cf5e="" class="content__anodd">${ket_qua1}</b>` +
+                        `</div>` +
+                        `<div data-v-3978cf5e="" class="header__child point van-col van-col--5">` +
+                        `<div data-v-3978cf5e="" class="point-box">` +
+                        `<div data-v-3978cf5e="" class="point-box__anodd"></div>` +
+                        `<div data-v-3978cf5e="" class="point-box__aliquot"></div>` +
+                        `</div>` +
+                        `</div>` +
+                        `</div>`
+                    );
+                }
             }, 3000);
         }
     });
