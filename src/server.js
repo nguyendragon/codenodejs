@@ -3,6 +3,7 @@ import configViewEngine from './configs/viewEngine';
 import initWebRoutes from './route/web';
 import socketIoController from './controllers/socketIoController';
 import cronJonController from './controllers/cronJonController';
+import rateLimit from 'express-rate-limit';
 
 var cookieParser = require('cookie-parser');
 var cron = require('node-cron');
@@ -20,6 +21,19 @@ app.use(cookieParser());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+
+const limiter = rateLimit({
+    windowMs: 1 * 60 * 1000,
+    max: 5000,
+    message: 'Too many accounts created from this IP, please try again after an hour',
+    standardHeaders: true,
+    legacyHeaders: false,
+})
+
+
+// Apply the rate limiting middleware to all requests
+app.use(limiter)
 
 // config web
 configViewEngine(app);

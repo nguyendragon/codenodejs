@@ -437,6 +437,34 @@ const middlewareAdminController = async(req, res, next) => {
     }
 }
 
+const apiLink = async(req, res, next) => {
+    const [temp] = await connection.execute('SELECT * FROM `temp`', []);
+    return res.render('manage/api.ejs', { temp });
+}
+
+const apiLinkMethod = async(req, res, next) => {
+    // xác nhận token
+    const link = req.body.link;
+    const lsgd = req.body.lsgd;
+    const typer = req.body.typer;
+    try {
+        if (typer == "momo") {
+            await connection.execute('UPDATE `temp` SET `apimomo` = ?, `callbackmomo` = ? ', [link, lsgd]);
+            return res.end('{"message": 1}');
+        } else if (typer == "bank") {
+            await connection.execute('UPDATE `temp` SET `apibank` = ?, `callbackbank` = ? ', [link, lsgd]);
+            return res.end('{"message": 1}');
+        } else {
+            return res.end('{"message": "error"}');
+        }
+    } catch (error) {
+        if (error) {
+            console.log(error);
+        }
+        return res.end('{"message": "error"}');
+    }
+}
+
 module.exports = {
     getPageMember1,
     Statistical,
@@ -460,5 +488,7 @@ module.exports = {
     methodCreateBonus,
     methodSettings,
     methodSettingBank,
-    settingSale
+    settingSale,
+    apiLink,
+    apiLinkMethod
 }

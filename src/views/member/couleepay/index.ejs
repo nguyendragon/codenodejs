@@ -61,7 +61,7 @@
                                             <i class="payment-cell__left-icon">
                                             <img color="white" src="/images/bankigg.png" style="object-fit: contain;"></i>
                                             <div class="payment-list-item__text payment-cell__text">
-                                                <span> thẻ chuyển thẻ</span>
+                                                <span>Chuyển khoản nhanh</span>
                                                 <!---->
                                             </div>
                                             <i class="payment-cell__right-icon">
@@ -73,7 +73,19 @@
                                             <i class="payment-cell__left-icon">
                                             <img color="white" src="/images/wallet.99c4a615.png" style="object-fit: contain;"></i>
                                             <div class="payment-list-item__text payment-cell__text">
-                                                <span> ví điện tử</span>
+                                                <span>Ví điện tử</span>
+                                                <!---->
+                                            </div>
+                                            <i class="payment-cell__right-icon">
+                                                <svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="arrow right circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-arrow-right-circle b-icon bi"><g><path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"></path></g></svg></i></div>
+                                        <!---->
+                                    </div>
+                                    <div data-v-301e0c40="" class="payment-list-item mt-3">
+                                        <div variant="primary" class="payment-cell">
+                                            <i class="payment-cell__left-icon">
+                                            <img color="white" src="/images/card.png" style="object-fit: contain;"></i>
+                                            <div class="payment-list-item__text payment-cell__text">
+                                                <span>Thẻ cào</span>
                                                 <!---->
                                             </div>
                                             <i class="payment-cell__right-icon">
@@ -107,13 +119,13 @@
     <% if (couleepays.length > 0) {%>
         <script>
             $(document).ready(function() {
+                var id_don_hang = '<%=couleepays[0].id_txn%>';
                 $('.payment-list-item:eq(0)').click(function(e) {
                     e.preventDefault();
                     $(".payment-cell:eq(0)").animate({
                         right: '500px'
                     });
                     setTimeout(() => {
-                        var id_don_hang = "<%=couleepays[0].id_txn%>";
                         $.ajax({
                             type: "POST",
                             url: "/couleepay/receipt",
@@ -136,12 +148,33 @@
                         right: '500px'
                     });
                     setTimeout(() => {
-                        var id_don_hang = '<%=couleepays[0].id_txn%>';
                         $.ajax({
                             type: "POST",
                             url: "/couleepay/receipt",
                             data: {
                                 typeS: "momo",
+                                id_don_hang: id_don_hang,
+                            },
+                            dataType: "json",
+                            success: function(response) {
+                                if (response.message == 1) {
+                                    location.href = `/couleepay/<%=couleepays[0].id_txn%>/receipt`;
+                                }
+                            }
+                        });
+                    }, 300);
+                });
+                $('.payment-list-item:eq(2)').click(function(e) {
+                    e.preventDefault();
+                    $(".payment-cell:eq(2)").animate({
+                        right: '500px'
+                    });
+                    setTimeout(() => {
+                        $.ajax({
+                            type: "POST",
+                            url: "/couleepay/receipt",
+                            data: {
+                                typeS: "card",
                                 id_don_hang: id_don_hang,
                             },
                             dataType: "json",

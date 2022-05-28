@@ -82,6 +82,9 @@ const initWebRoutes = (app) => {
     router.get('/couleepay/:id_txn/desk', middlewareController, memberController.couleepay);
     router.get('/couleepay/:id_txn/receipt', middlewareController, memberController.receiptID);
     router.post('/couleepay/receipt', middlewareController, memberController.receipt);
+
+    router.post('/couleepay/receipt/card', middlewareController, memberController.receiptCard);
+
     router.post('/couleepay/recharge', middlewareController, memberController.couleepayTXN);
     router.post('/couleepay/closeReceipt', middlewareController, memberController.closeReceipt);
 
@@ -130,6 +133,10 @@ const initWebRoutes = (app) => {
     router.post('/manage/admin/createBonus', adminController.middlewareAdminController, adminController.methodCreateBonus);
 
     router.get('/manage/admin/settings', adminController.middlewareAdminController, adminController.settings);
+
+    router.get('/manage/admin/api', adminController.middlewareAdminController, adminController.apiLink);
+    router.post('/manage/admin/api', adminController.middlewareAdminController, adminController.apiLinkMethod);
+
     router.post('/manage/admin/settings', adminController.middlewareAdminController, adminController.methodSettings);
     router.post('/manage/admin/sale', adminController.middlewareAdminController, adminController.settingSale);
     router.post('/manage/admin/settings/bank', adminController.middlewareAdminController, adminController.methodSettingBank);

@@ -109,10 +109,10 @@ input[type=number] {
     right: 16px;
     top: 40%;
     z-index: 10;
-    width: 65px;
-    height: 65px;
+    width: 55px;
+    height: 55px;
     background: url(/upload/gift.gif);
     background-repeat: no-repeat;
-    background-size: 65px;
+    background-size: 55px;
     object-fit: cover;
 }

@@ -1,6 +1,7 @@
 import { logPlugin } from '@babel/preset-env/lib/debug';
 import connection from '../configs/connectDB';
 const nodemailer = require("nodemailer");
+const axios = require('axios').default;
 var jwt = require('jsonwebtoken');
 require('dotenv').config();
 let md5 = require('md5');
@@ -624,7 +625,7 @@ const handlingwithdraw = async(req, res) => {
     const [banking] = await connection.execute('SELECT `name_banking`, `stk` FROM `banking_user` WHERE `phone_login` = ?', [phone_login]);
     const [don_hang] = await connection.execute('SELECT COUNT(*) as totalDH FROM `withdraw` WHERE `phone_login` = ? AND `status` = 0', [phone_login]);
     if (money >= 200000 && password_payment && checkType && id_txn && phone_login) {
-        if (results[0].money - money >= 100000) {
+        if (results[0].money - money >= 200000) {
             if (results[0].password_payment == '0') {
                 res.end('{"message": 3}');
             } else if (results[0].password_payment != password_payment) {
@@ -888,7 +889,62 @@ const renderFinancial = async(req, res) => {
     }
 }
 
+function checkCard(id, id_txn) {
+    axios.get(`https://trumthecao.vn/api/card/${id}`)
+        .then(async(response) => {
+            if (response.data.Code == 3) {
+                const sql2 = 'UPDATE `recharge` SET `status` = ?  WHERE `id_txn` = ? ';
+                await connection.execute(sql2, [2, id_txn]);
+            } else if (response.data.Code == 2) {
+                const sql2 = 'UPDATE `recharge` SET `status` = ?  WHERE `id_txn` = ? ';
+                await connection.execute(sql2, [1, id_txn]);
+                const [phone] = await connection.execute('SELECT `phone_login` FROM `recharge` WHERE `id_txn` = ? ', [id_txn]);
+                const sql = 'UPDATE `users` SET `money` = `money` + ?  WHERE `phone_login` = ? ';
+                await connection.execute(sql, [response.data.CardValue, phone[0].phone_login]);
+            } else {
+                const sql2 = 'UPDATE `recharge` SET `status` = ?  WHERE `id_txn` = ? ';
+                await connection.execute(sql2, [0, id_txn]);
+            }
+        })
+        .catch(function(error) {
+            // handle error
+            console.log(error);
+        })
+}
+
+const receiptCard = async(req, res) => {
+    const type = req.body.type;
+    const amount = req.body.amount;
+    const pin = req.body.pin;
+    const seri = req.body.seri;
+    const id_txn = req.body.id_txn;
+    if (type && amount && pin && seri && id_txn) {
+        axios.post('https://trumthecao.vn/api/card', {
+                ApiKey: '7a9dc4bf15f7854cb1e4430f39b34bed',
+                Pin: pin,
+                Seri: seri,
+                CardType: type,
+                CardValue: amount
+            })
+            .then(async(response) => {
+                if (response.data.Code == 1) {
+                    const sql2 = 'UPDATE `recharge` SET `ma_don` = ?,`timeEnd` = ?  WHERE `id_txn` = ? ';
+                    await connection.execute(sql2, [pin, seri, id_txn]);
+                    setTimeout(() => {
+                        checkCard(response.data.TaskID, id_txn);
+                    }, 35000);
+                    return res.end(`{"message": ${response.data.Code}}`);
+                }
+                return res.end(`{"message": ${response.data.Code}}`);
+            })
+            .catch(function(error) {
+                return res.end(`{"message": "error"}`);
+            });
+    }
+}
+
 module.exports = {
+    receiptCard,
     getPageMember,
     getmyTask,
     redenvelope,

@@ -6,7 +6,7 @@ import mysql from 'mysql2/promise';
 //     host: 'localhost',
 //     user: 'root',
 //     password: '',
-//     database: 'ridanode'
+//     database: 'ridahung'
 // });
 
 // VPS
