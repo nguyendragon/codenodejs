@@ -622,7 +622,7 @@ const handlingwithdraw = async(req, res) => {
     const [banking] = await connection.execute('SELECT `name_banking`, `stk` FROM `banking_user` WHERE `phone_login` = ?', [phone_login]);
     const [don_hang] = await connection.execute('SELECT COUNT(*) as totalDH FROM `withdraw` WHERE `phone_login` = ? AND `status` = 0', [phone_login]);
     if (money >= 200000 && password_payment && checkType && id_txn && phone_login) {
-        if (results[0].money - money >= 200000) {
+        if (results[0].money - money >= 100000) {
             if (results[0].password_payment == '0') {
                 res.end('{"message": 3}');
             } else if (results[0].password_payment != password_payment) {
