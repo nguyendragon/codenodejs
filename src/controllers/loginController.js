@@ -27,9 +27,9 @@ const loginFunc = async(req, res) => {
     let password_login = md5(req.body.password_login);
     const [rows] = await connection.execute('SELECT * FROM `users` WHERE `phone_login` = ? AND veri = 1', [phone_login]);
     if (rows.length == 0) {
-        res.end('{"message": 2}');
+        return res.end('{"message": 2}');
     } else if (rows.length == 1 && rows[0]['password_v1'] != password_login) {
-        res.end('{"message": 3}');
+        return res.end('{"message": 3}');
     } else {
         const { password_v1, otp, ip, token, total_money, password_payment, lever, ma_gt_f2, sented, ...others } = rows[0];
         const accessToken = jwt.sign({
@@ -37,12 +37,13 @@ const loginFunc = async(req, res) => {
             timeNow: timeNow
         }, process.env.JWT_ACCESS_TOKEN, { expiresIn: "7d" });
         await connection.execute('UPDATE `users` SET `token` = ?, `status_login` = ? WHERE `phone_login` = ? ', [accessToken, 1, phone_login]);
-        res.end(`{"message": 1, "username": "${phone_login}", "token": "${accessToken}"}`);
+        return res.end(`{"message": 1, "username": "${phone_login}", "token": "${accessToken}"}`);
     }
 }
 
 function validateEmail(email) {
-    var pattern = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    // var pattern = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    var pattern = /([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@gmail([\.])com/g;
     return (pattern.test(email));
 }
 
@@ -76,13 +77,7 @@ const Mailer = async(mailer, otpCreate) => {
         `, // html body
     }, (err) => {
         if (err) {
-            return res.json({
-                message: "Lỗi",
-            });
-        } else {
-            return res.json({
-                message: "success",
-            });
+            console.log(err);
         }
     });
 }
@@ -91,7 +86,14 @@ const Mailer = async(mailer, otpCreate) => {
 const sendOTP = async(req, res) => {
     let phone_signup = req.body.phone_signup;
     let checkMail = validateEmail(phone_signup);
-    let ip = req.body.ip;
+    let ip;
+    if (req.headers['x-forwarded-for']) {
+        ip = req.headers['x-forwarded-for'].split(",")[0];
+    } else if (req.connection && req.connection.remoteAddress) {
+        ip = req.connection.remoteAddress;
+    } else {
+        ip = req.ip;
+    }
     let otp = Math.floor(Math.random() * (999999 - 100000)) + 100000;
     if (phone_signup.length > 15 && checkMail) {
         const [result] = await connection.execute('SELECT * FROM `users` WHERE `phone_login` = ?', [phone_signup]);
@@ -118,12 +120,16 @@ const sendOTP = async(req, res) => {
     }
 }
 
+
+
 // Đăng ký
 const register = async(req, res) => {
     // 0. Số điện thoại đã được đăng ký
     // 1. thành công
     // 2. Sai mã xác minh
     // 3. Mã đề xuất không tồn tại
+    // 4. Tài khoản đã bị khóa
+
     function readableRandomStringMaker(length) {
         for (var string = ''; string.length < length; string += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.charAt(Math.random() * 62 | 0));
         return string;
@@ -158,25 +164,40 @@ const register = async(req, res) => {
         return day + " " + month + " " + year + ", " + time + " " + am_pm;
     }
 
+    var ip;
+    if (req.headers['x-forwarded-for']) {
+        ip = req.headers['x-forwarded-for'].split(",")[0];
+    } else if (req.connection && req.connection.remoteAddress) {
+        ip = req.connection.remoteAddress;
+    } else {
+        ip = req.ip;
+    }
 
     var timeCr = TimeCreate();
 
     if (phone_signup) {
+        const [checkIP] = await connection.execute('SELECT `ip` FROM `users` WHERE `ip` = ?', [ip]);
         const [result] = await connection.execute("SELECT * FROM `users` WHERE `phone_login` = ? AND `otp` = ? ", [phone_signup, codeOTP]);
         if (result.length == 0) {
-            res.end('{"message": 2}');
+            return res.end('{"message": 2}');
         } else if (result[0].veri == 1) {
-            res.end('{"message": 0}');
+            return res.end('{"message": 0}');
         } else if (result[0].veri == 0) {
             const [rows] = await connection.execute("SELECT `ma_gt` FROM `users` WHERE ma_gt = ? ", [MaGioiThieu]);
             if (rows.length == 1) {
-                var sql = 'UPDATE `users` SET `id_user` = ?, `password_v1` = ?, `name_user` = ?, `ma_gt` = ?, `ma_gt_f1` = ?, `veri` = 1, `otp` = ?, `time` = ?, `money` = ? WHERE `phone_login` = ? ';
-                await connection.execute(sql, [id_user, password_v1, name_user, MaGioiThieu_User, MaGioiThieu, otp, timeCr, money_temp[0].khuyen_mai, phone_signup]);
-                var sql_wallet_bonus = 'INSERT INTO `wallet_bonus` SET `phone_login` = ?, `time` = ?';
-                await connection.execute(sql_wallet_bonus, [phone_signup, timeCr]);
-                res.end('{"message": 1}');
+                if (checkIP.length <= 2) {
+                    var sql = 'UPDATE `users` SET `id_user` = ?, `password_v1` = ?, `name_user` = ?, `ma_gt` = ?, `ma_gt_f1` = ?, `veri` = 1, `otp` = ?, `time` = ?, `money` = ?, `ip` = ? WHERE `phone_login` = ? ';
+                    await connection.execute(sql, [id_user, password_v1, name_user, MaGioiThieu_User, MaGioiThieu, otp, timeCr, money_temp[0].khuyen_mai, ip, phone_signup]);
+                    var sql_wallet_bonus = 'INSERT INTO `wallet_bonus` SET `phone_login` = ?, `time` = ?';
+                    await connection.execute(sql_wallet_bonus, [phone_signup, timeCr]);
+                    return res.end('{"message": 1}');
+                } else {
+                    var sql = 'UPDATE `users` SET `veri` = ? WHERE `ip` = ? ';
+                    await connection.execute(sql, [2, ip]);
+                    return res.end('{"message": "error"}');
+                }
             } else {
-                res.end('{"message": 3}');
+                return res.end('{"message": 3}');
             }
         }
     }

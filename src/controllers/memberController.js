@@ -5,6 +5,8 @@ const axios = require('axios').default;
 var jwt = require('jsonwebtoken');
 require('dotenv').config();
 let md5 = require('md5');
+var requestIp = require('request-ip');
+
 
 const Mailer = async(mailer, otpCreate) => {
     const email = mailer;
@@ -36,13 +38,7 @@ const Mailer = async(mailer, otpCreate) => {
         `, // html body
     }, (err) => {
         if (err) {
-            return res.json({
-                message: "Lỗi",
-            });
-        } else {
-            return res.json({
-                message: "success",
-            });
+            console.log(err);
         }
     });
 }
@@ -435,6 +431,7 @@ function xoakytu(text1) {
 }
 
 const editNikname = async(req, res) => {
+
     var tokenUser = req.cookies.token;
     var token = jwt.verify(tokenUser, process.env.JWT_ACCESS_TOKEN);
     var phone_login = token.user.phone_login;

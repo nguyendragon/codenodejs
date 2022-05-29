@@ -49,15 +49,15 @@ $(window).on('load', function() { // makes sure the whole site is loaded
     $('.preloader').delay(100).fadeOut('fast');
 });
 $(document).ready(function() {
-    const ipClients = async() => {
-        let ipClients = await fetch('https://api.ipify.org/?format=json');
-        let response = await ipClients.json();
-        let data = await response;
-        $('#ip').text(data.ip);
-    }
+    // const ipClients = async() => {
+    //     let ipClients = await fetch('https://api.ipify.org/?format=json');
+    //     let response = await ipClients.json();
+    //     let data = await response;
+    //     $('#ip').text(data.ip);
+    // }
 
-    const token = "Bearer " + localStorage.getItem('token');
-    ipClients();
+    // const token = "Bearer " + localStorage.getItem('token');
+    // ipClients();
 
     function setCookie(cname, cvalue, exdays) {
         const d = new Date();
@@ -67,7 +67,6 @@ $(document).ready(function() {
     }
 
     $('.login_check').click(function(e) {
-        console.log();
         e.preventDefault();
         const phone_login = $('#phone_login').val().trim();
         const password_login = $('#pass_login').val().trim();
@@ -150,7 +149,8 @@ $(document).ready(function() {
     });
 
     function validateEmail(email) {
-        var pattern = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        // var pattern = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        var pattern = /([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@gmail([\.])com/g;
         return (pattern.test(email));
     }
     /**************************************************************/
@@ -159,8 +159,6 @@ $(document).ready(function() {
         $(this).attr('disabled', 'disabled');
         const phone_signup = $('.Nationalarea-input').val().trim();
         const checkMail = validateEmail(phone_signup);
-        console.log(checkMail);
-        const ip = $('#ip').text();
         let length_input = phone_signup.length;
         if (phone_signup != '' && length_input > 8 && length_input > 15 && checkMail) {
             var settings = {
@@ -173,7 +171,7 @@ $(document).ready(function() {
                 // },
                 "data": {
                     "phone_signup": phone_signup,
-                    "ip": ip,
+                    // "ip": ip,
                 },
             };
 
@@ -204,12 +202,12 @@ $(document).ready(function() {
                     $('.errrorPhone').html("")
                 });
             } else if (length_input <= 15) {
-                $('.errrorPhone').html("Địa chỉ email quá ngắn hoặc không đúng");
+                $('.errrorPhone').html("Địa chỉ gmail quá ngắn hoặc không đúng");
                 $(".Nationalarea-input").keyup(function() {
                     $('.errrorPhone').html("")
                 });
             } else if (!checkMail) {
-                $('.errrorPhone').html("Địa chỉ email không đúng định dạng");
+                $('.errrorPhone').html("Địa chỉ gmail không đúng định dạng");
                 $(".Nationalarea-input").keyup(function() {
                     $('.errrorPhone').html("")
                 });
@@ -262,7 +260,7 @@ $(document).ready(function() {
                         $('.signup_check').removeAttr("disabled");
                     } else if (dataSignUP.message == 0) {
                         $('.van-toast--fail').removeClass('display-none');
-                        $('.van-toast--fail .van-toast__text').html('Số điện thoại di động đã được đăng ký.');
+                        $('.van-toast--fail .van-toast__text').html('Địa chỉ email đã được đăng ký.');
                         setTimeout(function() {
                             $('.van-toast--fail').addClass('display-none')
                         }, 1000)
@@ -295,13 +293,13 @@ $(document).ready(function() {
                     }, 1000)
                 }, 200);
             } else if (phone_signup == "" || checkMail == false) {
-                $('.errrorPhone').html("Vui lòng nhập đúng định dạng địa chỉ email");
+                $('.errrorPhone').html("Vui lòng nhập đúng định dạng địa chỉ gmail");
                 $(".Nationalarea-input").keyup(function() {
                     $('.errrorPhone').html("")
                 });
                 $('.signup_check').removeAttr("disabled");
             } else if (length_input <= 15) {
-                $('.errrorPhone').html("Địa chỉ email quá ngắn hoặc không đúng");
+                $('.errrorPhone').html("Địa chỉ gmail quá ngắn hoặc không đúng");
                 $(".Nationalarea-input").keyup(function() {
                     $('.errrorPhone').html("")
                 });
