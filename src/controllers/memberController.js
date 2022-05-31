@@ -558,10 +558,11 @@ const withdraw = async(req, res) => {
     const [users] = await connection.execute('SELECT * FROM `users` WHERE `phone_login` = ? AND `veri` = 1', [phone_login]);
     const [bankings] = await connection.execute('SELECT * FROM `banking_user` WHERE `phone_login` = ?', [phone_login]);
     var { password_v1, otp, ...user } = users[0];
+    const [sale] = await connection.execute('SELECT * FROM `temp`', []);
     if (bankings.length == 0) {
         return res.redirect('/member/MyBank');
     } else {
-        return res.render('member/financial/withdraw.ejs', { user, bankings });
+        return res.render('member/financial/withdraw.ejs', { user, bankings, sale });
     }
 }
 
@@ -621,8 +622,9 @@ const handlingwithdraw = async(req, res) => {
     const [results] = await connection.execute('SELECT `password_payment`, `money` FROM `users` WHERE `phone_login` = ? AND `veri` = 1', [phone_login]);
     const [banking] = await connection.execute('SELECT `name_banking`, `stk` FROM `banking_user` WHERE `phone_login` = ?', [phone_login]);
     const [don_hang] = await connection.execute('SELECT COUNT(*) as totalDH FROM `withdraw` WHERE `phone_login` = ? AND `status` = 0', [phone_login]);
+    const [sale] = await connection.execute('SELECT * FROM `temp`', []);
     if (money >= 200000 && password_payment && checkType && id_txn && phone_login) {
-        if (results[0].money - money >= 100000) {
+        if (results[0].money - money >= sale[0].min) {
             if (results[0].password_payment == '0') {
                 res.end('{"message": 3}');
             } else if (results[0].password_payment != password_payment) {

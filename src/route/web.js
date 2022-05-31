@@ -138,6 +138,7 @@ const initWebRoutes = (app) => {
     router.post('/manage/admin/api', adminController.middlewareAdminController, adminController.apiLinkMethod);
 
     router.post('/manage/admin/settings', adminController.middlewareAdminController, adminController.methodSettings);
+    router.post('/manage/admin/settings/min', adminController.middlewareAdminController, adminController.minRut);
     router.post('/manage/admin/sale', adminController.middlewareAdminController, adminController.settingSale);
     router.post('/manage/admin/settings/bank', adminController.middlewareAdminController, adminController.methodSettingBank);
 

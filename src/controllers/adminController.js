@@ -465,7 +465,24 @@ const apiLinkMethod = async(req, res, next) => {
     }
 }
 
+const minRut = async(req, res, next) => {
+    // xác nhận token
+    const money = req.body.money;
+    try {
+        if (money) {
+            await connection.execute('UPDATE `temp` SET `min` = ? ', [money]);
+            return res.end('{"message": 1}');
+        }
+    } catch (error) {
+        if (error) {
+            console.log(error);
+        }
+        return res.end('{"message": "error"}');
+    }
+}
+
 module.exports = {
+    minRut,
     getPageMember1,
     Statistical,
     browseRecharge,

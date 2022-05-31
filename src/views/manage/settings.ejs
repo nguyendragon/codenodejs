@@ -33,7 +33,7 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>Tạo lixi</h1>
+                                <h1>Cài đặt</h1>
                             </div>
                         </div>
                     </div>
@@ -59,6 +59,14 @@
                                     </div>
                                     <input type="text" class="form-control" id="sale-money" placeholder="Nhập số điện thoại" value="<%=sale[0].khuyen_mai%>"><br>
                                     <button type="submit" class="btn btn-primary sale-money" style="width: 100%;">Submit</button>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="text-center">
+                                        <label for="quantity">Duy trì tài khoản</label>
+                                    </div>
+                                    <input type="text" class="form-control" id="duy-tri" placeholder="Nhập số tiền để lại" value="<%=sale[0].min%>"><br>
+                                    <button type="submit" class="btn btn-primary duy-tri" style="width: 100%;">Submit</button>
                                 </div>
 
                                 <div class="form-group">
@@ -232,6 +240,29 @@
                     title: 'Oops...',
                 })
             }
+        });
+    </script>
+    <script>
+        $('.duy-tri').click(function(e) {
+            e.preventDefault();
+            let value = $('#duy-tri').val().trim();
+            $.ajax({
+                type: "POST",
+                url: "/manage/admin/settings/min",
+                data: {
+                    money: value
+                },
+                dataType: "json",
+                success: function(response) {
+                    if (response.message == 1) {
+                        Swal.fire(
+                            'Good job!',
+                            'You clicked the button!',
+                            'success'
+                        )
+                    }
+                }
+            });
         });
     </script>
 </body>
