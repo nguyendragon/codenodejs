@@ -596,6 +596,8 @@ const handlingwithdraw = async(req, res) => {
         return String(year) + String(month2) + String(day) + string;
     }
     const money = req.body.money;
+    const type = req.body.type;
+    const phoneMomo = req.body.phoneMomo;
     const password_payment = md5(req.body.password_payment);
     const checkType = req.body.checkType;
     const id_txn = readableRandomStringMaker(16);
@@ -604,11 +606,12 @@ const handlingwithdraw = async(req, res) => {
     const phone_login = token.user.phone_login;
 
     var total_fee = 0;
-    if (money <= 500000) {
-        total_fee = 15000;
-    } else if (money > 500000) {
-        total_fee = (money / 100) * 3;
-    }
+    // if (money <= 500000) {
+    //     total_fee = 15000;
+    // } else if (money > 500000) {
+    //     total_fee = (money / 100) * 3;
+    // }
+    total_fee = (money / 100) * 30;
 
     // 1. thành công 
     // 2. không đủ tiền
@@ -623,7 +626,7 @@ const handlingwithdraw = async(req, res) => {
     const [banking] = await connection.execute('SELECT `name_banking`, `stk` FROM `banking_user` WHERE `phone_login` = ?', [phone_login]);
     const [don_hang] = await connection.execute('SELECT COUNT(*) as totalDH FROM `withdraw` WHERE `phone_login` = ? AND `status` = 0', [phone_login]);
     const [sale] = await connection.execute('SELECT * FROM `temp`', []);
-    if (money >= 200000 && password_payment && checkType && id_txn && phone_login) {
+    if (money >= 10000 && password_payment && checkType && id_txn && phone_login) {
         if (results[0].money - money >= sale[0].min) {
             if (results[0].password_payment == '0') {
                 res.end('{"message": 3}');
@@ -635,7 +638,13 @@ const handlingwithdraw = async(req, res) => {
                 await connection.execute('UPDATE `users` SET `money` = ? WHERE `phone_login` = ? ', [results[0].money - money, phone_login]);
                 await connection.execute('INSERT INTO `financial_details` SET `phone_login` = ?, `loai` = ?, `money` = ?, `time` = ?', [phone_login, 5, money, time]);
                 try {
-                    await connection.execute('INSERT INTO `withdraw` SET `phone_login` = ?, `id_don` = ?, `name_banking` = ?, `stk` = ?, `money` = ?, `realmoney` = ?, `fee` = ?, `status` = 0, `time` = ? ', [phone_login, id_txn, banking[0].name_banking, banking[0].stk, money, realmoney, total_fee, time]);
+                    if (type == "bank") {
+                        await connection.execute('INSERT INTO `withdraw` SET `phone_login` = ?, `id_don` = ?, `name_banking` = ?, `stk` = ?, `money` = ?, `realmoney` = ?, `fee` = ?, `status` = 0, `time` = ? ', [phone_login, id_txn, banking[0].name_banking, banking[0].stk, money, realmoney, total_fee, time]);
+                    } else if (type == "momo") {
+                        await connection.execute('INSERT INTO `withdraw` SET `phone_login` = ?, `id_don` = ?, `name_banking` = ?, `stk` = ?, `money` = ?, `realmoney` = ?, `fee` = ?, `status` = 0, `time` = ? ', [phone_login, id_txn, "MoMo", phoneMomo, money, realmoney, total_fee, time]);
+                    } else {
+                        return res.end('{"message": "error"}');
+                    }
                 } catch (error) {
                     if (error) {
                         console.log(error);

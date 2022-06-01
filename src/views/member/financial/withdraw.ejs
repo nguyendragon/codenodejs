@@ -22,6 +22,7 @@
     <link href="/css/main.css" rel="stylesheet">
     <link href="/css/pages__finance.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/app.css">
+    <link href="/cssCouleepay/app.3e31acb6.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/pages__parity.css">
     <link rel="stylesheet" type="text/css" href="/css/pages__member.css">
     <style>
@@ -54,7 +55,7 @@
                 <div class="van-nav-bar__right"></div>
             </div>
             <div data-v-7113d57d="" class="bar-box"></div>
-            <div data-v-7113d57d="" class="withdrawal-content">
+            <div data-v-7113d57d="" class="withdrawal-content display-none">
                 <div data-v-7113d57d="" class="info">
                     <div data-v-7113d57d="" class="info-balance">
                         Số dư của tôi:<span data-v-7113d57d=""> ₫<%=String(user.money).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');%></span></div>
@@ -63,14 +64,23 @@
                         <div data-v-7113d57d="" class="info-address-icon">
                             <i data-v-7113d57d="" class="van-icon van-icon-success"><!----></i></div>
                     </div>
-                    <div data-v-7113d57d="" class="info-note"><span data-v-7113d57d=""><span data-v-7113d57d="">
+                    <div data-v-7113d57d="" class="info-note"><span data-v-7113d57d="">
+                        <!-- <span data-v-7113d57d="">
                         Số lượng &lt; 500000&nbsp;phí dịch vụ
-                        <a data-v-7113d57d="">₫15000</a></span></span>
-                        <span data-v-7113d57d="">
+                        <a data-v-7113d57d="">₫15000</a></span></span> -->
+                        <!-- <span data-v-7113d57d="">
                                 <span data-v-7113d57d="">Số lượng &gt; 500000&nbsp;phí dịch vụ
                             <a data-v-7113d57d="">3%</a>
                         </span>
+                        </span> -->
+                        <span data-v-7113d57d="">
+                                <span data-v-7113d57d="">Phí dịch vụ
+                            <a data-v-7113d57d="">30%</a>
                         </span>
+                        </span>
+                    </div>
+                    <div id="typemom">
+
                     </div>
                     <div data-v-7113d57d="" class="info-title">Số tiền rút ra</div>
                     <div data-v-7113d57d="" class="info-price">
@@ -80,7 +90,7 @@
                     <div data-v-7113d57d="" class="info-note">
                         <span data-v-7113d57d="">Số dư có thể rút：₫
                             <% var ck = user.money - sale[0].min; 
-                            if (ck > 100000 && user.money >= 300000) { %>
+                            if (ck > 10000 && user.money >= sale[0].min) { %> 
                                 <%=String(ck).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');%>
                             <% } else { %>
                                 <%="0"%>
@@ -91,7 +101,7 @@
                     <div data-v-7113d57d="" class="info-time">Hạn mức rút tiền một lần</div>
                     <div data-v-7113d57d="" class="info-note">
                         <span data-v-7113d57d="">Mức tối đa:₫50000000</span>
-                        <span data-v-7113d57d="">Mức tối thiếu:₫200000</span>
+                        <span data-v-7113d57d="">Mức tối thiếu:₫10000</span>
                     </div>
                     <div data-v-7113d57d="" class="info-time" style="transform: translateX(-2px);">Thời gian phục vụ</div>
                     <div data-v-7113d57d="" class="info-note">
@@ -103,9 +113,42 @@
                 <div data-v-7113d57d="" class="withdrawal-btn">
                     <button data-v-7113d57d="" class="withdrawal-withdraw">Rút tiền</button>
                     <button data-v-7113d57d="" onclick="location.href = 'WithdrawRecord'" class="withdrawal-btn-records">Lịch sử đặt hàng</button>
+                    <button data-v-7113d57d="" class="withdrawal-btn-records back-select-withdrawal">Quay về trang chính</button>
                 </div>
                 <div data-v-7113d57d="" class="info"></div>
             </div>
+            <div class="payment-way">
+                <div data-v-301e0c40="" class="payment-container">
+                    <h3 data-v-301e0c40="">Phương thức rút tiền</h3>
+                    <div data-v-301e0c40="" class="payment-list-group">
+                        <div data-v-301e0c40="" class="payment-list-item mt-3">
+                            <div variant="primary" class="payment-cell" style="margin-bottom: 10px">
+                                <i class="payment-cell__left-icon">
+                                <img color="white" src="/images/bankigg.png" style="object-fit: contain;"></i>
+                                <div class="payment-list-item__text payment-cell__text banking">
+                                    <span>Banking</span>
+                                    <!---->
+                                </div>
+                                <i class="payment-cell__right-icon">
+                                    <svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="arrow right circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-arrow-right-circle b-icon bi"><g><path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"></path></g></svg></i></div>
+                            <!---->
+                        </div>
+                        <div data-v-301e0c40="" class="payment-list-item mt-3">
+                            <div variant="primary" class="payment-cell">
+                                <i class="payment-cell__left-icon">
+                                <img color="white" src="/images/wallet.99c4a615.png" style="object-fit: contain;"></i>
+                                <div class="payment-list-item__text payment-cell__text momo">
+                                    <span>Momo</span>
+                                    <!---->
+                                </div>
+                                <i class="payment-cell__right-icon">
+                                    <svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="arrow right circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-arrow-right-circle b-icon bi"><g><path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"></path></g></svg></i></div>
+                            <!---->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="typebank" style="display: none;"></div>
         </div>
     </div>
     <div class="van-toast van-toast--middle van-toast--text" style="z-index: 2100;display: none;">
@@ -155,16 +198,45 @@
     <!----->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
+        $('.banking').click(function(e) {
+            e.preventDefault();
+            $('#typemom').html("");
+            $('#typebank').text("bank");
+            $('.info-address').removeClass('display-none');
+            $('.withdrawal-content').removeClass('display-none');
+            $('.payment-way').addClass('display-none');
+        });
+        $('.momo').click(function(e) {
+            e.preventDefault();
+            $('#typebank').text("momo");
+            $('.withdrawal-content').removeClass('display-none');
+            $('.payment-way').addClass('display-none');
+            $('.info-address').addClass('display-none');
+            $('#typemom').html(`<div data-v-7113d57d="" class="info-title">Số điện thoại momo</div>
+                    <div data-v-7113d57d="" class="info-price">
+                        <input data-v-7113d57d="" placeholder="Nhập số điện thoại" type="number" style="width: 100%;" id="phoneMomo">
+                    </div>`);
+        });
+        $('.back-select-withdrawal').click(function(e) {
+            e.preventDefault();
+            $('.withdrawal-content').addClass('display-none');
+            $('.payment-way').removeClass('display-none');
+        });
+        let mins = Number("<%=sale[0].min%>");
         $(document).ready(function() {
             $("input").keyup(function() {
-                var fee = $('input').val().trim();
-                if (fee < 100000) {
-                    $('.info-note:eq(1) span i').text('0');
-                } else if (fee <= 500000) {
-                    total_fee = 15000;
-                    $('.info-note:eq(1) span i').text('15000');
-                } else if (fee > 500000) {
-                    total_fee = (fee / 100) * 3;
+                var fee = Number($('input').val().trim());
+                // if (fee < 100000) {
+                //     $('.info-note:eq(1) span i').text('0');
+                // } else if (fee <= 500000) {
+                //     total_fee = 15000;
+                //     $('.info-note:eq(1) span i').text('15000');
+                // } else if (fee > 500000) {
+                //     total_fee = (fee / 100) * 30;
+                //     $('.info-note:eq(1) span i').text(total_fee.toFixed(2));
+                // }
+                if (Number.isInteger(fee)) {
+                    total_fee = (fee / 100) * 30;
                     $('.info-note:eq(1) span i').text(total_fee.toFixed(2));
                 }
             });
@@ -179,7 +251,7 @@
                 e.preventDefault();
                 const money = $('#moneyWithdraw').val();
                 const checkType = $.isNumeric(money);
-                if (checkType && money != "" && money >= 200000) {
+                if (checkType && money != "" && money >= 10000) {
                     $('.van-overlay').fadeIn(200);
                     $('.form_wth').fadeIn(200);
                 } else {
@@ -193,6 +265,8 @@
             $('.van-button--large').click(function(e) {
                 e.preventDefault();
                 const money = $('#moneyWithdraw').val();
+                const phoneMomo = $('#phoneMomo').val();
+                const typeBank = $('#typebank').text();
                 const password_payment = $('.van-field__controlPayment2').val();
                 const checkType = $.isNumeric(money);
                 const d = new Date();
@@ -206,6 +280,8 @@
                             money: money,
                             password_payment: password_payment,
                             checkType: checkType,
+                            phoneMomo: phoneMomo,
+                            type: typeBank,
                         },
                         dataType: "json",
                         success: function(response) {
