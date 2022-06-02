@@ -481,7 +481,20 @@ const minRut = async(req, res, next) => {
     }
 }
 
+const win_rate = async(req, res, next) => {
+    // xác nhận token
+    const value = req.body.value;
+    if (value) {
+        await connection.execute('UPDATE `temp` SET `win_rate` = ? ', [value]);
+        return res.end('{"message": 1}');
+    } else {
+        return res.end('{"message": "error"}');
+    }
+}
+
+
 module.exports = {
+    win_rate,
     minRut,
     getPageMember1,
     Statistical,

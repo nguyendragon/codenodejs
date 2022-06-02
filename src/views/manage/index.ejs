@@ -326,13 +326,31 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card card-primary">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Điều chỉnh tỷ lệ thắng</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="editWinRate" id="winrate">tỷ lệ thắng: <%=temp[0].win_rate%>%</label>
+                                                    <input type="number" class="form-control" id="editWinRate" value="<%=temp[0].win_rate%>" placeholder="Enter the number">
+                                                </div>
+                                            </div>
+                                            <div class="card-footer" style="text-align: center;">
+                                                <button type="submit" class="btn btn-primary editWinRate">Triển khai</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="card">
                                     <div class="card-header border-transparent">
                                         <h3 class="card-title">TOP Nạp Tiền</h3>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
+                                              <i class="fas fa-minus"></i>
+                                            </button>
                                             <button type="button" class="btn btn-tool" data-card-widget="remove">
                       <i class="fas fa-times"></i>
                     </button>
@@ -400,6 +418,35 @@
     <script src="/js/admin.js"></script>
     <script src="/js/socketAdmin.js"></script>
     <script>
+        $('.editWinRate').click(function(e) {
+            e.preventDefault();
+            let value = $('#editWinRate').val().trim();
+            $.ajax({
+                type: "POST",
+                url: "/manage/admin/settings/win_rate",
+                data: {
+                    value: value,
+                },
+                dataType: "json",
+                success: function(response) {
+                    if (response.message == 1) {
+                        $('#editWinRate').val(value);
+                        $('#winrate').text("Tỷ lệ thắng: " + value + "%");
+                        Swal.fire(
+                            'Good job!',
+                            'Khởi tạo thành công!',
+                            'success'
+                        );
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!'
+                        });
+                    }
+                }
+            });
+        });
     </script>
 </body>
 
