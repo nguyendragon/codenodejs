@@ -60,7 +60,7 @@ const automomo = (cron) => {
 }
 
 const parityCron = (cron, io) => {
-    cron.schedule('*/3 * * * *', async() => {
+    cron.schedule('*/10 * * * * *', async() => {
         await handlingOrder.add_tage_woipy();
         const [giai_doan] = await connection.execute('SELECT * FROM `tage_woipy` WHERE `ket_qua` = 0 ORDER BY `id` DESC LIMIT 1 ', []);
         const [orderbox] = await connection.execute('SELECT * FROM `tage_woipy` WHERE `ket_qua` != 0 ORDER BY `id` DESC LIMIT 1 ', []);
